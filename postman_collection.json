@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "employee-onboarding-api",
+		"name": "Employee Onboarding API",
+		"description": "Complete API collection for Employee Onboarding Form Builder System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5600/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"health"
+					]
+				},
+				"description": "Health check endpoint to verify server is running"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Form Schema",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5600/api/form-schema",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"form-schema"
+					]
+				},
+				"description": "Returns the dynamic form schema for Employee Onboarding form with all field definitions and validation rules"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Submission - Valid",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fullName\": \"John Doe\",\n  \"age\": 25,\n  \"department\": \"engineering\",\n  \"skills\": [\"js\", \"react\"],\n  \"joiningDate\": \"2024-06-01\",\n  \"bio\": \"Experienced software developer with expertise in React and Node.js\",\n  \"isRemote\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5600/api/submissions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions"
+					]
+				},
+				"description": "Creates a new form submission with valid data. Returns submission ID and createdAt timestamp."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Submission - Invalid (Validation Errors)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fullName\": \"AB\",\n  \"age\": 15,\n  \"department\": \"engineering\",\n  \"skills\": [],\n  \"joiningDate\": \"2023-01-01\",\n  \"bio\": \"\",\n  \"isRemote\": false\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5600/api/submissions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions"
+					]
+				},
+				"description": "Example of invalid submission that will return validation errors for: fullName (minLength), age (min), skills (required), joiningDate (minDate)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Submissions - Paginated",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5600/api/submissions?page=1&limit=10&sortOrder=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number (default: 1)"
+						},
+						{
+							"key": "limit",
+							"value": "10",
+							"description": "Items per page (default: 10, max: 50)"
+						},
+						{
+							"key": "sortOrder",
+							"value": "desc",
+							"description": "Sort order: 'asc' or 'desc' (default: 'desc')"
+						}
+					]
+				},
+				"description": "Returns paginated list of submissions sorted by createdAt. Supports pagination and sorting."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Submissions - Page 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5600/api/submissions?page=2&limit=10&sortOrder=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "sortOrder",
+							"value": "desc"
+						}
+					]
+				},
+				"description": "Example of fetching page 2 of submissions"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Submissions - Ascending Order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5600/api/submissions?page=1&limit=10&sortOrder=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "sortOrder",
+							"value": "asc"
+						}
+					]
+				},
+				"description": "Returns submissions sorted by createdAt in ascending order (oldest first)"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Submissions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5600/api/submissions/search?q=john",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "john",
+							"description": "Search query string"
+						}
+					]
+				},
+				"description": "Searches submissions by query string. Searches across all submission data fields."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Submission",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"fullName\": \"John Doe Updated\",\n  \"age\": 26,\n  \"department\": \"engineering\",\n  \"skills\": [\"js\", \"react\", \"node\"],\n  \"joiningDate\": \"2024-06-01\",\n  \"bio\": \"Updated bio with more experience\",\n  \"isRemote\": false\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5600/api/submissions/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "REPLACE_WITH_ACTUAL_SUBMISSION_ID",
+							"description": "Submission ID from previous create/get requests"
+						}
+					]
+				},
+				"description": "Updates an existing submission by ID. Replace :id with actual submission ID from a previous request."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Submission",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5600/api/submissions/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "REPLACE_WITH_ACTUAL_SUBMISSION_ID",
+							"description": "Submission ID to delete"
+						}
+					]
+				},
+				"description": "Deletes a submission by ID. Replace :id with actual submission ID."
+			},
+			"response": []
+		},
+		{
+			"name": "Export CSV",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5600/api/submissions/export/csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5600",
+					"path": [
+						"api",
+						"submissions",
+						"export",
+						"csv"
+					]
+				},
+				"description": "Exports all submissions as a CSV file. Response will be a CSV file download."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5600",
+			"type": "string"
+		}
+	]
+}
+
