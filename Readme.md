@@ -302,7 +302,7 @@ curl "http://localhost:5600/api/submissions?page=1&limit=10&sortOrder=desc"
 
 - All core features are working as expected.
 
-- The Toggle Theme button is currently not switching the Scaffold to Light Theme as intended. The toggle action is triggered, but the UI does not reflect the theme change.
+- The Toggle Theme button is set to default dark only.
 
 ## 📝 Development Notes
 
